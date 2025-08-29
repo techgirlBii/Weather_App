@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+    }
+    .card {
+      border-radius: 20px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+    }
+    .weather-icon {
+      font-size: 60px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card p-4 text-center">
+      <h2 class="mb-4">🌤 Weather App</h2>
+      <form method="POST" class="mb-3">
+        <input type="text" name="keyword" class="form-control mb-2" placeholder="Enter city name" required>
+        <button type="submit" class="btn btn-primary w-100">Get Weather</button>
+      </form>
+
+      {% if info %}
+        {% if info.cod == 200 %}
+          <h3>{{ info.name }}, {{ info.sys.country }}</h3>
+          <h1>{{ info.main.temp }}°C</h1>
+          <p>{{ info.weather[0].description | capitalize }}</p>
+          <p>Humidity: {{ info.main.humidity }}% | Wind: {{ info.wind.speed }} m/s</p>
+        {% else %}
+          <div class="alert alert-danger">
+            {{ info.message }}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
